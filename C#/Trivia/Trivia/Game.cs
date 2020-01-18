@@ -46,7 +46,7 @@ namespace Trivia
 
         public bool IsPlayable()
         {
-            return HowManyPlayers() >= 2;
+            return _players.Count >= 2;
         }
 
         public void Add(string playerName)
@@ -54,11 +54,6 @@ namespace Trivia
             _players.Add(playerName);
             _output(playerName + " was added");
             _output("They are player number " + _players.Count);
-        }
-
-        public int HowManyPlayers()
-        {
-            return _players.Count;
         }
 
         public void Roll(int roll)
