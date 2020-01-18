@@ -5,14 +5,14 @@ namespace Trivia
 {
     public class Board
     {
-        private readonly int _size;
+        private readonly StepManager _stepManager;
         public  Dictionary<string, Category> Categories { get; }
         public Dictionary<string,int> PlayerLocations { get; } = new Dictionary<string, int>();
         private Dictionary<int,string> CategoryMap { get; }  = new Dictionary<int, string>();
         
-        public Board(int size, Category[] categories)
+        public Board(Category[] categories, StepManager stepManager)
         {
-            _size = size;
+            _stepManager = stepManager;
             Categories = categories.ToDictionary(c => c.Name, c => c);
             for (int i = 0; i < categories.Length; i++)
             {
@@ -45,9 +45,7 @@ namespace Trivia
 
         public void MovePlayer(string name, int roll)
         {
-            PlayerLocations[name] = (PlayerLocations[name] + roll) % _size;
+            PlayerLocations[name] = _stepManager.Step(PlayerLocations[name], roll);
         }
-
-        
     }
 }

@@ -13,14 +13,12 @@ namespace Trivia
 
         private int _currentPlayer;
         private bool _isGettingOutOfPenaltyBox;
-        private const int BoardSize = 12;
-        private const int QuestionCount = 50;
         private Board _board;
 
         public Game(Action<string> output, IMarket market)
         {
             _output = output;
-            _board = new Board(BoardSize, market.Categories);
+            _board = new Board(market.Categories,market.StepManager);
         }
 
         public bool IsPlayable()
