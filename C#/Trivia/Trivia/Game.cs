@@ -7,6 +7,7 @@ namespace Trivia
     public class Game
     {
         private const int MaxPlayers = 6;
+        private const int CoinsToWin = 6;
 
         private readonly Action<string> _output;
         private readonly List<string> _players = new List<string>();
@@ -26,6 +27,7 @@ namespace Trivia
 
         private int _currentPlayer;
         private bool _isGettingOutOfPenaltyBox;
+        private const int CategoryCount  = 4;
 
         public Game(Action<string> output)
         {
@@ -107,16 +109,15 @@ namespace Trivia
 
         private string CurrentCategory()
         {
-            if (_places[_currentPlayer] == 0) return Categories.Pop;
-            if (_places[_currentPlayer] == 4) return Categories.Pop;
-            if (_places[_currentPlayer] == 8) return Categories.Pop;
-            if (_places[_currentPlayer] == 1) return Categories.Science;
-            if (_places[_currentPlayer] == 5) return Categories.Science;
-            if (_places[_currentPlayer] == 9) return Categories.Science;
-            if (_places[_currentPlayer] == 2) return Categories.Sports;
-            if (_places[_currentPlayer] == 6) return Categories.Sports;
-            if (_places[_currentPlayer] == 10) return Categories.Sports;
-            return Categories.Rock;
+            var categoryIndex = _places[_currentPlayer] % CategoryCount;
+            var categoryMap = new Dictionary<int, string>()
+            {
+                {0, Categories.Pop},
+                {1, Categories.Science},
+                {2, Categories.Sports},
+                {3, Categories.Rock},
+            };
+            return categoryMap[categoryIndex];
         }
 
         public bool WasCorrectlyAnswered()
@@ -176,7 +177,7 @@ namespace Trivia
 
         private bool DidPlayerWin()
         {
-            return !(_purses[_currentPlayer] == 6);
+            return _purses[_currentPlayer] != CoinsToWin;
         }
     }
 
