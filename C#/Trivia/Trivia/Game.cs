@@ -6,8 +6,12 @@ namespace Trivia
 {
     public class Game
     {
-        private const int CoinsToWin = 6;
-
+        private Dictionary<PlayerType,int> _coinsToWin= new Dictionary<PlayerType, int>()
+        {
+            {PlayerType.Adult,6},
+            {PlayerType.Kid, 4},
+        };
+        
         private readonly Action<string> _output;
         private readonly List<Player> _players = new List<Player>();
 
@@ -133,7 +137,8 @@ namespace Trivia
 
         private bool DidPlayerWin()
         {
-            return _players[_currentPlayer].Purse != CoinsToWin;
+            var currentPlayer = _players[_currentPlayer];
+            return currentPlayer.Purse != _coinsToWin[currentPlayer.PlayerType];
         }
     }
 
