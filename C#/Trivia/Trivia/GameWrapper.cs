@@ -4,11 +4,13 @@ namespace Trivia
 {
     public class GameWrapper
     {
+        private readonly Action<string> _output;
         private  bool _notAWinner;
         private readonly Random _rand;
-
+        
         public GameWrapper(Action<string> output, int? seed =null)
         {
+            _output = output;
             _rand = seed.HasValue
                 ? new Random(seed.Value)
                 : new Random();
@@ -16,7 +18,7 @@ namespace Trivia
 
         public void Run()
         {
-            var aGame = new Game();
+            var aGame = new Game(_output);
 
             aGame.Add("Chet");
             aGame.Add("Pat");
