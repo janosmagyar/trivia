@@ -129,7 +129,7 @@ namespace Trivia
 
         private bool NormalAnswer()
         {
-            _output("Answer was corrent!!!!");
+            _output("Answer was correct!!!!");
             _purses[_currentPlayer]++;
             _output(_players[_currentPlayer]
                     + " now has "
