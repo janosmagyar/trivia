@@ -74,10 +74,7 @@ namespace Trivia
 
         private void AskQuestion(int roll)
         {
-            _board.PlayerLocations[_players[_currentPlayer].Name] += roll;
-          
-            if (_board.PlayerLocations[_players[_currentPlayer].Name]> BoardSize - 1) _board.PlayerLocations[_players[_currentPlayer].Name] = _board.PlayerLocations[_players[_currentPlayer].Name] - BoardSize;
-
+            _board.MovePlayer(_players[_currentPlayer].Name, roll);
             _output(_players[_currentPlayer].Name
                     + "'s new location is "
                     + _board.PlayerLocations[_players[_currentPlayer].Name]);
@@ -87,8 +84,6 @@ namespace Trivia
             _output(q);
             _board.Categories[cc].Questions.Remove(q);
         }
-
-       
 
         public bool WasCorrectlyAnswered()
         {

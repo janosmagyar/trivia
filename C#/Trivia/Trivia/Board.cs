@@ -32,6 +32,12 @@ namespace Trivia
             return PlayerLocations[name];
         }
 
+
+        public void MovePlayer(string name, int roll)
+        {
+            PlayerLocations[name] = (PlayerLocations[name] + roll) % _size;
+        }
+
         public Board(int size, ICollection<Category> categories)
         {
             _size = size;
