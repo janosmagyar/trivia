@@ -65,23 +65,27 @@ namespace Trivia
             _output(_players[_currentPlayer] + " is the current player");
             _output("They have rolled a " + roll);
 
-            if (_inPenaltyBox[_currentPlayer])
-            {
-                if (roll % 2 != 0)
-                {
-                    _isGettingOutOfPenaltyBox = true;
-
-                    _output(_players[_currentPlayer] + " is getting out of the penalty box");
-                    
-                }
-                else
-                {
-                    _output(_players[_currentPlayer] + " is not getting out of the penalty box");
-                    _isGettingOutOfPenaltyBox = false;
-                    return;
-                }
-            }
+            if (HandlePenaltyBox(roll)) return;
             AskQuestion(roll);
+        }
+
+        private bool HandlePenaltyBox(int roll)
+        {
+            if (!_inPenaltyBox[_currentPlayer]) return false;
+            
+            if (roll % 2 != 0)
+            {
+                _isGettingOutOfPenaltyBox = true;
+
+                _output(_players[_currentPlayer] + " is getting out of the penalty box");
+            }
+            else
+            {
+                _output(_players[_currentPlayer] + " is not getting out of the penalty box");
+                _isGettingOutOfPenaltyBox = false;
+                return true;
+            }
+            return false;
         }
 
         private void AskQuestion(int roll)
