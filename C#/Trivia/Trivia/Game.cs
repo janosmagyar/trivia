@@ -6,11 +6,7 @@ namespace Trivia
 {
     public class Game
     {
-        private Dictionary<PlayerType,int> _coinsToWin= new Dictionary<PlayerType, int>()
-        {
-            {PlayerType.Adult,6},
-            {PlayerType.Kid, 4},
-        };
+        
         
         private readonly Action<string> _output;
         private readonly List<Player> _players = new List<Player>();
@@ -107,7 +103,7 @@ namespace Trivia
                     + _players[_currentPlayer].Purse
                     + " Gold Coins.");
 
-            var winner = DidPlayerWin();
+            var winner = DidPlayerNotWin();
             _currentPlayer++;
             if (_currentPlayer == _players.Count) _currentPlayer = 0;
 
@@ -128,20 +124,27 @@ namespace Trivia
         public bool WrongAnswer()
         {
             _output("Question was incorrectly answered");
-            _output(_players[_currentPlayer].Name + " was sent to the penalty box");
-            _players[_currentPlayer].IsInPenaltyBox = true;
-
+            Penalty(_board,_output,_players[_currentPlayer]);
             _currentPlayer++;
             if (_currentPlayer == _players.Count) _currentPlayer = 0;
             return true;
         }
 
+        public void Penalty(Board board, Action<string> output, Player currentPlayer)
+        {
+            var cc = board.Category(board.PlayerLocations[currentPlayer.Name]);
+            if (currentPlayer.PlayerType == PlayerType.Adult || cc == Categories.Pop)
+            {
+                output( $"{currentPlayer.Name} was sent to the penalty box");
+                currentPlayer.IsInPenaltyBox = true;
+            }
+        }
 
-        private bool DidPlayerWin()
+
+        private bool DidPlayerNotWin()
         {
             var currentPlayer = _players[_currentPlayer];
-            return currentPlayer.Purse != _coinsToWin[currentPlayer.PlayerType];
+            return !new WinningConditions().IsWining(currentPlayer);
         }
     }
-
 }
