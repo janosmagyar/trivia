@@ -84,9 +84,11 @@ namespace Trivia
                     + _board.PlayerLocations[_players[_currentPlayer].Name]);
             _output("The category is " + _board.Category(_board.PlayerLocations[_players[_currentPlayer].Name]));
             var cc = _board.Category(_board.PlayerLocations[_players[_currentPlayer].Name]);
-            var q =   _board.Categories[cc].Questions.First();
+            
+            var q = _board.Categories[cc].Questions[_board.Categories[cc].QuestionsUsed];
+            _board.Categories[cc].QuestionsUsed++;
             _output(q);
-            _board.Categories[cc].Questions.Remove(q);
+            
         }
 
         public bool WasCorrectlyAnswered()

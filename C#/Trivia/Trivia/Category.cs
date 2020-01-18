@@ -4,7 +4,7 @@ namespace Trivia
 {
     public class Category
     {
-
+        public int QuestionsUsed { get; set; }
         public string  Name { get;}
         public IList<string> Questions { get; } = new List<string>();
         
