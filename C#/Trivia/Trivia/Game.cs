@@ -147,20 +147,8 @@ namespace Trivia
         {
             if (_isGettingOutOfPenaltyBox)
             {
-                _output("Answer was correct!!!!");
-                _purses[_currentPlayer]++;
-                _output(_players[_currentPlayer]
-                        + " now has "
-                        + _purses[_currentPlayer]
-                        + " Gold Coins.");
-
-                var winner = DidPlayerWin();
-                _currentPlayer++;
-                if (_currentPlayer == _players.Count) _currentPlayer = 0;
-
-                return winner;
+                return NormalAnswer();
             }
-
             _currentPlayer++;
             if (_currentPlayer == _players.Count) _currentPlayer = 0;
             return true;
