@@ -122,33 +122,32 @@ namespace Trivia
 
         public bool WasCorrectlyAnswered()
         {
-            if (_inPenaltyBox[_currentPlayer])
-            {
-                if (_isGettingOutOfPenaltyBox)
-                {
-                    _output("Answer was correct!!!!");
-                    _purses[_currentPlayer]++;
-                    _output(_players[_currentPlayer]
-                            + " now has "
-                            + _purses[_currentPlayer]
-                            + " Gold Coins.");
+            return _inPenaltyBox[_currentPlayer] 
+                ? PenaltyBoxAnswer() 
+                : NormalAnswer();
+        }
 
-                    var winner = DidPlayerWin();
-                    _currentPlayer++;
-                    if (_currentPlayer == _players.Count) _currentPlayer = 0;
+        private bool NormalAnswer()
+        {
+            _output("Answer was corrent!!!!");
+            _purses[_currentPlayer]++;
+            _output(_players[_currentPlayer]
+                    + " now has "
+                    + _purses[_currentPlayer]
+                    + " Gold Coins.");
 
-                    return winner;
-                }
-                else
-                {
-                    _currentPlayer++;
-                    if (_currentPlayer == _players.Count) _currentPlayer = 0;
-                    return true;
-                }
-            }
-            else
+            var winner = DidPlayerWin();
+            _currentPlayer++;
+            if (_currentPlayer == _players.Count) _currentPlayer = 0;
+
+            return winner;
+        }
+
+        private bool PenaltyBoxAnswer()
+        {
+            if (_isGettingOutOfPenaltyBox)
             {
-                _output("Answer was corrent!!!!");
+                _output("Answer was correct!!!!");
                 _purses[_currentPlayer]++;
                 _output(_players[_currentPlayer]
                         + " now has "
@@ -161,6 +160,10 @@ namespace Trivia
 
                 return winner;
             }
+
+            _currentPlayer++;
+            if (_currentPlayer == _players.Count) _currentPlayer = 0;
+            return true;
         }
 
         public bool WrongAnswer()
