@@ -6,14 +6,15 @@ namespace Trivia
 {
     public class Game
     {
+        private const int MaxPlayers = 6;
 
         private readonly Action<string> _output;
         private readonly List<string> _players = new List<string>();
 
-        private readonly int[] _places = new int[6];
-        private readonly int[] _purses = new int[6];
+        private readonly int[] _places = new int[MaxPlayers];
+        private readonly int[] _purses = new int[MaxPlayers];
 
-        private readonly bool[] _inPenaltyBox = new bool[6];
+        private readonly bool[] _inPenaltyBox = new bool[MaxPlayers];
 
         private readonly Dictionary<string,IList<string>> _questions = new Dictionary<string,IList<string>>()
         {
