@@ -20,9 +20,9 @@ namespace Trivia
         {
             var aGame = new Game(_output);
 
-            aGame.Add("Chet");
-            aGame.Add("Pat");
-            aGame.Add("Sue");
+            aGame.AddPlayer("Chet");
+            aGame.AddPlayer("Pat");
+            aGame.AddPlayer("Sue");
 
             do
             {

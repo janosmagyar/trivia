@@ -53,7 +53,7 @@ namespace Trivia
             return _players.Count >= 2;
         }
 
-        public void Add(string playerName)
+        public void AddPlayer(string playerName)
         {
             _players.Add(playerName);
             _output(playerName + " was added");
