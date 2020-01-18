@@ -39,6 +39,7 @@ namespace Trivia
         public void AddPlayer(string playerName)
         {
             _players.Add(new Player(playerName));
+            _board.AddPlayer(playerName);
             _output(playerName + " was added");
             _output("They are player number " + _players.Count);
         }
@@ -73,14 +74,15 @@ namespace Trivia
 
         private void AskQuestion(int roll)
         {
-            _players[_currentPlayer].Place += roll;
-            if (_players[_currentPlayer].Place > BoardSize - 1) _players[_currentPlayer].Place = _players[_currentPlayer].Place - BoardSize;
+            _board.PlayerLocations[_players[_currentPlayer].Name] += roll;
+          
+            if (_board.PlayerLocations[_players[_currentPlayer].Name]> BoardSize - 1) _board.PlayerLocations[_players[_currentPlayer].Name] = _board.PlayerLocations[_players[_currentPlayer].Name] - BoardSize;
 
             _output(_players[_currentPlayer].Name
                     + "'s new location is "
-                    + _players[_currentPlayer].Place);
-            _output("The category is " + _board.Category(_players[_currentPlayer].Place));
-            var cc = _board.Category(_players[_currentPlayer].Place);
+                    + _board.PlayerLocations[_players[_currentPlayer].Name]);
+            _output("The category is " + _board.Category(_board.PlayerLocations[_players[_currentPlayer].Name]));
+            var cc = _board.Category(_board.PlayerLocations[_players[_currentPlayer].Name]);
             var q =   _board.Categories[cc].Questions.First();
             _output(q);
             _board.Categories[cc].Questions.Remove(q);

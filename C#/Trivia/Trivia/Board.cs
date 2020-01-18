@@ -7,6 +7,7 @@ namespace Trivia
     {
         private readonly int _size;
         public  Dictionary<string, Category> Categories { get; }
+        public Dictionary<string,int> PlayerLocations { get; } = new Dictionary<string, int>();
         
         public string Category(int position)
         {
@@ -20,10 +21,22 @@ namespace Trivia
             };
             return categoryMap[categoryIndex];
         }
+
+        public void AddPlayer(string name)
+        {
+            PlayerLocations.Add(name,0);
+        }
+
+        public int PlayerLocation(string name)
+        {
+            return PlayerLocations[name];
+        }
+
         public Board(int size, ICollection<Category> categories)
         {
             _size = size;
             Categories = categories.ToDictionary(c => c.Name, c => c);
+            
         }
     }
 }
