@@ -49,7 +49,7 @@ namespace Trivia
             return HowManyPlayers() >= 2;
         }
 
-        public bool Add(string playerName)
+        public void Add(string playerName)
         {
             _players.Add(playerName);
             _places[HowManyPlayers()] = 0;
@@ -58,7 +58,6 @@ namespace Trivia
 
             _output(playerName + " was added");
             _output("They are player number " + _players.Count);
-            return true;
         }
 
         public int HowManyPlayers()
