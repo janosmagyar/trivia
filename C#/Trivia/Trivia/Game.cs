@@ -6,6 +6,10 @@ namespace Trivia
 {
     public class Game
     {
+        private const string PopCategory = "Pop";
+        private const string SienceCategory = "Science";
+        private const string SportsCategory = "Sports";
+        private const string RockCategory = "Rock";
         private readonly Action<string> _output;
         private readonly List<string> _players = new List<string>();
 
@@ -14,10 +18,13 @@ namespace Trivia
 
         private readonly bool[] _inPenaltyBox = new bool[6];
 
-        private readonly LinkedList<string> _popQuestions = new LinkedList<string>();
-        private readonly LinkedList<string> _scienceQuestions = new LinkedList<string>();
-        private readonly LinkedList<string> _sportsQuestions = new LinkedList<string>();
-        private readonly LinkedList<string> _rockQuestions = new LinkedList<string>();
+        private readonly Dictionary<string,IList<string>> _questions = new Dictionary<string,IList<string>>()
+        {
+            {PopCategory,new List<string>()},
+            {SienceCategory, new List<string>()},
+            {SportsCategory, new List<string>()},
+            {RockCategory,new List<string>()},
+        };
 
         private int _currentPlayer;
         private bool _isGettingOutOfPenaltyBox;
@@ -27,10 +34,10 @@ namespace Trivia
             _output = output;
             for (var i = 0; i < 50; i++)
             {
-                _popQuestions.AddLast("Pop Question " + i);
-                _scienceQuestions.AddLast(("Science Question " + i));
-                _sportsQuestions.AddLast(("Sports Question " + i));
-                _rockQuestions.AddLast(CreateRockQuestion(i));
+                _questions[PopCategory].Add("Pop Question " + i);
+                _questions[SienceCategory].Add(("Science Question " + i));
+                _questions[SportsCategory].Add(("Sports Question " + i));
+                _questions[RockCategory].Add(CreateRockQuestion(i));
             }
         }
 
@@ -105,37 +112,49 @@ namespace Trivia
         {
             switch (CurrentCategory())
             {
-                case "Pop":
-                    _output(_popQuestions.First());
-                    _popQuestions.RemoveFirst();
+                case PopCategory:
+                {
+                    var q = _questions[PopCategory].First();
+                    _output(q);
+                    _questions[PopCategory].Remove(q);
                     break;
-                case "Science":
-                    _output(_scienceQuestions.First());
-                    _scienceQuestions.RemoveFirst();
+                }
+                case SienceCategory:
+                {
+                    var q = _questions[SienceCategory].First();
+                    _output(q);
+                    _questions[SienceCategory].Remove(q);
                     break;
-                case "Sports":
-                    _output(_sportsQuestions.First());
-                    _sportsQuestions.RemoveFirst();
+                }
+                case SportsCategory:
+                {
+                    var q = _questions[SportsCategory].First();
+                    _output(q);
+                    _questions[SportsCategory].Remove(q);
                     break;
-                case "Rock":
-                    _output(_rockQuestions.First());
-                    _rockQuestions.RemoveFirst();
+                }
+                case RockCategory:
+                {
+                    var q = _questions[RockCategory].First();
+                    _output(q);
+                    _questions[RockCategory].Remove(q);
                     break;
+                }
             }
         }
 
         private string CurrentCategory()
         {
-            if (_places[_currentPlayer] == 0) return "Pop";
-            if (_places[_currentPlayer] == 4) return "Pop";
-            if (_places[_currentPlayer] == 8) return "Pop";
-            if (_places[_currentPlayer] == 1) return "Science";
-            if (_places[_currentPlayer] == 5) return "Science";
-            if (_places[_currentPlayer] == 9) return "Science";
-            if (_places[_currentPlayer] == 2) return "Sports";
-            if (_places[_currentPlayer] == 6) return "Sports";
-            if (_places[_currentPlayer] == 10) return "Sports";
-            return "Rock";
+            if (_places[_currentPlayer] == 0) return PopCategory;
+            if (_places[_currentPlayer] == 4) return PopCategory;
+            if (_places[_currentPlayer] == 8) return PopCategory;
+            if (_places[_currentPlayer] == 1) return SienceCategory;
+            if (_places[_currentPlayer] == 5) return SienceCategory;
+            if (_places[_currentPlayer] == 9) return SienceCategory;
+            if (_places[_currentPlayer] == 2) return SportsCategory;
+            if (_places[_currentPlayer] == 6) return SportsCategory;
+            if (_places[_currentPlayer] == 10) return SportsCategory;
+            return RockCategory;
         }
 
         public bool WasCorrectlyAnswered()
