@@ -110,37 +110,10 @@ namespace Trivia
 
         private void AskQuestion()
         {
-            switch (CurrentCategory())
-            {
-                case PopCategory:
-                {
-                    var q = _questions[PopCategory].First();
-                    _output(q);
-                    _questions[PopCategory].Remove(q);
-                    break;
-                }
-                case SienceCategory:
-                {
-                    var q = _questions[SienceCategory].First();
-                    _output(q);
-                    _questions[SienceCategory].Remove(q);
-                    break;
-                }
-                case SportsCategory:
-                {
-                    var q = _questions[SportsCategory].First();
-                    _output(q);
-                    _questions[SportsCategory].Remove(q);
-                    break;
-                }
-                case RockCategory:
-                {
-                    var q = _questions[RockCategory].First();
-                    _output(q);
-                    _questions[RockCategory].Remove(q);
-                    break;
-                }
-            }
+            var cc = CurrentCategory();
+            var q = _questions[cc].First();
+            _output(q);
+            _questions[cc].Remove(q);
         }
 
         private string CurrentCategory()
