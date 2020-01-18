@@ -6,7 +6,7 @@ namespace Trivia
     {
         public static void Main(string[] args)
         {
-            new GameWrapper(Console.WriteLine).Run();
+            new GameWrapper(Console.WriteLine, new InternationalMarket()).Run();
         }
     }
 }

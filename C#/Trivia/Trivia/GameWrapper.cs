@@ -5,12 +5,14 @@ namespace Trivia
     public class GameWrapper
     {
         private readonly Action<string> _output;
+        private readonly IMarket _market;
         private  bool _notAWinner;
         private readonly Random _rand;
         
-        public GameWrapper(Action<string> output, int? seed =null)
+        public GameWrapper(Action<string> output,IMarket market, int? seed =null)
         {
             _output = output;
+            _market = market;
             _rand = seed.HasValue
                 ? new Random(seed.Value)
                 : new Random();
@@ -18,7 +20,7 @@ namespace Trivia
 
         public void Run()
         {
-            var aGame = new Game(_output);
+            var aGame = new Game(_output,_market);
 
             aGame.AddPlayer("Chet");
             aGame.AddPlayer("Pat");

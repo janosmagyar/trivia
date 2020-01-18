@@ -8,18 +8,23 @@ namespace Trivia
         private readonly int _size;
         public  Dictionary<string, Category> Categories { get; }
         public Dictionary<string,int> PlayerLocations { get; } = new Dictionary<string, int>();
+        private Dictionary<int,string> CategoryMap { get; }  = new Dictionary<int, string>();
+        
+        public Board(int size, Category[] categories)
+        {
+            _size = size;
+            Categories = categories.ToDictionary(c => c.Name, c => c);
+            for (int i = 0; i < categories.Length; i++)
+            {
+                CategoryMap.Add(i,categories[i].Name);
+            }
+        }
         
         public string Category(int position)
         {
             var categoryIndex = position % Categories.Values.Count;
-            var categoryMap = new Dictionary<int, string>()
-            {
-                {0, Trivia.Categories.Pop},
-                {1, Trivia.Categories.Science},
-                {2, Trivia.Categories.Sports},
-                {3, Trivia.Categories.Rock},
-            };
-            return categoryMap[categoryIndex];
+            
+            return CategoryMap[categoryIndex];
         }
 
         public void AddPlayer(string name)
@@ -38,11 +43,6 @@ namespace Trivia
             PlayerLocations[name] = (PlayerLocations[name] + roll) % _size;
         }
 
-        public Board(int size, ICollection<Category> categories)
-        {
-            _size = size;
-            Categories = categories.ToDictionary(c => c.Name, c => c);
-            
-        }
+        
     }
 }

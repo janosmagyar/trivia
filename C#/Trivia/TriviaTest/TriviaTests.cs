@@ -18,7 +18,7 @@ namespace TriviaTest
             {
                 for (int seed = 0; seed < 1000; seed++)
                 {
-                    new GameWrapper(output.WriteLine,seed).Run();
+                    new GameWrapper(output.WriteLine,new InternationalMarket(),seed).Run();
                 }
                 Approvals.Verify(output);
             }

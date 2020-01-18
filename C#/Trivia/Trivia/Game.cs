@@ -17,18 +17,10 @@ namespace Trivia
         private const int QuestionCount = 50;
         private Board _board;
 
-        public Game(Action<string> output)
+        public Game(Action<string> output, IMarket market)
         {
             _output = output;
-            _board = new Board(
-                BoardSize,
-                new[]
-                    {
-                        new Category(Categories.Pop, QuestionCount),
-                        new Category(Categories.Science, QuestionCount),
-                        new Category(Categories.Sports, QuestionCount),
-                        new Category(Categories.Rock,QuestionCount),
-                    });
+            _board = new Board(BoardSize, market.Categories);
         }
 
         public bool IsPlayable()
@@ -133,7 +125,7 @@ namespace Trivia
         public void Penalty(Board board, Action<string> output, Player currentPlayer)
         {
             var cc = board.Category(board.PlayerLocations[currentPlayer.Name]);
-            if (currentPlayer.PlayerType == PlayerType.Adult || cc == Categories.Pop)
+            if (currentPlayer.PlayerType == PlayerType.Adult || cc == CategoryNames.Pop)
             {
                 output( $"{currentPlayer.Name} was sent to the penalty box");
                 currentPlayer.IsInPenaltyBox = true;
