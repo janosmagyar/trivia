@@ -10,24 +10,25 @@ namespace Trivia
 
         private readonly Action<string> _output;
         private readonly List<Player> _players = new List<Player>();
-        private readonly Dictionary<string,Category> _categories;
 
         private int _currentPlayer;
         private bool _isGettingOutOfPenaltyBox;
         private const int BoardSize = 12;
         private const int QuestionCount = 50;
+        private Board _board;
 
         public Game(Action<string> output)
         {
             _output = output;
-            _categories= new Category[]
-            {
-                new Category(Categories.Pop, QuestionCount),
-                new Category(Categories.Science, QuestionCount),
-                new Category(Categories.Sports, QuestionCount),
-                new Category(Categories.Rock,QuestionCount),
-               
-            }.ToDictionary(c=>c.Name,c=>c);
+            _board = new Board(
+                BoardSize,
+                new[]
+                    {
+                        new Category(Categories.Pop, QuestionCount),
+                        new Category(Categories.Science, QuestionCount),
+                        new Category(Categories.Sports, QuestionCount),
+                        new Category(Categories.Rock,QuestionCount),
+                    });
         }
 
         public bool IsPlayable()
@@ -78,25 +79,14 @@ namespace Trivia
             _output(_players[_currentPlayer].Name
                     + "'s new location is "
                     + _players[_currentPlayer].Place);
-            _output("The category is " + CurrentCategory());
-            var cc = CurrentCategory();
-            var q =  _categories[cc].Questions.First();
+            _output("The category is " + _board.Category(_players[_currentPlayer].Place));
+            var cc = _board.Category(_players[_currentPlayer].Place);
+            var q =   _board.Categories[cc].Questions.First();
             _output(q);
-            _categories[cc].Questions.Remove(q);
+            _board.Categories[cc].Questions.Remove(q);
         }
 
-        private string CurrentCategory()
-        {
-            var categoryIndex = _players[_currentPlayer].Place % _categories.Count;
-            var categoryMap = new Dictionary<int, string>()
-            {
-                {0, Categories.Pop},
-                {1, Categories.Science},
-                {2, Categories.Sports},
-                {3, Categories.Rock},
-            };
-            return categoryMap[categoryIndex];
-        }
+       
 
         public bool WasCorrectlyAnswered()
         {
