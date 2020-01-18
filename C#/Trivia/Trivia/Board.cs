@@ -19,7 +19,12 @@ namespace Trivia
                 CategoryMap.Add(i,categories[i].Name);
             }
         }
-        
+
+        public Category Category(string playerName)
+        {
+            return Categories[Category(PlayerLocations[playerName])];
+        }
+
         public string Category(int position)
         {
             var categoryIndex = position % Categories.Values.Count;

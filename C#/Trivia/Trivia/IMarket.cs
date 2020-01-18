@@ -15,10 +15,10 @@ namespace Trivia
 
             Categories = new[]
             {
-                new Category(CategoryNames.Pop, questionCount),
-                new Category(CategoryNames.Science, questionCount),
-                new Category(CategoryNames.Sports, questionCount),
-                new Category(CategoryNames.Rock, questionCount),
+                new Category(CategoryNames.Pop, 1, questionCount),
+                new Category(CategoryNames.Science, 1, questionCount),
+                new Category(CategoryNames.Sports, 1, questionCount),
+                new Category(CategoryNames.Rock, 1, questionCount),
             };
         }
     }
@@ -33,10 +33,28 @@ namespace Trivia
 
             Categories = new[]
             {
-                new Category(CategoryNames.Pop, questionCount),
-                new Category(CategoryNames.Politics, questionCount),
-                new Category(CategoryNames.Sports, questionCount),
-                new Category(CategoryNames.Rock, questionCount),
+                new Category(CategoryNames.Pop, 1, questionCount),
+                new Category(CategoryNames.Politics, 1, questionCount),
+                new Category(CategoryNames.Sports, 1, questionCount),
+                new Category(CategoryNames.Rock, 1, questionCount),
+            };
+        }
+    }
+    
+    public class GermanMarket:IMarket
+    {
+        public Category[] Categories { get; }
+
+        public GermanMarket()
+        {
+            var questionCount = 50;
+
+            Categories = new[]
+            {
+                new Category(CategoryNames.Pop, 1, questionCount),
+                new Category(CategoryNames.Science, 2, questionCount),
+                new Category(CategoryNames.Sports, 1, questionCount),
+                new Category(CategoryNames.Rock, 1, questionCount),
             };
         }
     }

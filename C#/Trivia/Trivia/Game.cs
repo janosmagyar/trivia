@@ -89,7 +89,8 @@ namespace Trivia
         private bool NormalAnswer()
         {
             _output("Answer was correct!!!!");
-            _players[_currentPlayer].Purse++;
+            var category = _board.Category(_players[_currentPlayer].Name);
+            _players[_currentPlayer].Purse += category.Score;
             _output(_players[_currentPlayer].Name
                     + " now has "
                     + _players[_currentPlayer].Purse
