@@ -31,16 +31,17 @@ namespace Trivia
             _output = output;
             for (var i = 0; i < 50; i++)
             {
-                _questions[Categories.Pop].Add("Pop Question " + i);
-                _questions[Categories.Science].Add(("Science Question " + i));
-                _questions[Categories.Sports].Add(("Sports Question " + i));
-                _questions[Categories.Rock].Add(CreateRockQuestion(i));
+                
+                AddQuestion(Categories.Pop,i);
+                AddQuestion(Categories.Science,i);
+                AddQuestion(Categories.Sports,i);
+                AddQuestion(Categories.Rock,i);
             }
         }
 
-        public string CreateRockQuestion(int index)
+        private void AddQuestion(string category, int index)
         {
-            return "Rock Question " + index;
+            _questions[category].Add($"{category} Question {index}");
         }
 
         public bool IsPlayable()
