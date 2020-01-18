@@ -103,25 +103,24 @@ namespace Trivia
 
         private void AskQuestion()
         {
-            if (CurrentCategory() == "Pop")
+            switch (CurrentCategory())
             {
-                _output(_popQuestions.First());
-                _popQuestions.RemoveFirst();
-            }
-            if (CurrentCategory() == "Science")
-            {
-                _output(_scienceQuestions.First());
-                _scienceQuestions.RemoveFirst();
-            }
-            if (CurrentCategory() == "Sports")
-            {
-                _output(_sportsQuestions.First());
-                _sportsQuestions.RemoveFirst();
-            }
-            if (CurrentCategory() == "Rock")
-            {
-                _output(_rockQuestions.First());
-                _rockQuestions.RemoveFirst();
+                case "Pop":
+                    _output(_popQuestions.First());
+                    _popQuestions.RemoveFirst();
+                    break;
+                case "Science":
+                    _output(_scienceQuestions.First());
+                    _scienceQuestions.RemoveFirst();
+                    break;
+                case "Sports":
+                    _output(_sportsQuestions.First());
+                    _sportsQuestions.RemoveFirst();
+                    break;
+                case "Rock":
+                    _output(_rockQuestions.First());
+                    _rockQuestions.RemoveFirst();
+                    break;
             }
         }
 
