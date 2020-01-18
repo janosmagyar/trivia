@@ -10,36 +10,24 @@ namespace Trivia
 
         private readonly Action<string> _output;
         private readonly List<Player> _players = new List<Player>();
-
-        private readonly Dictionary<string,IList<string>> _questions = new Dictionary<string,IList<string>>()
-        {
-            {Categories.Pop,new List<string>()},
-            {Categories.Science, new List<string>()},
-            {Categories.Sports, new List<string>()},
-            {Categories.Rock,new List<string>()},
-        };
+        private readonly Dictionary<string,Category> _categories;
 
         private int _currentPlayer;
         private bool _isGettingOutOfPenaltyBox;
-        private const int CategoryCount  = 4;
         private const int BoardSize = 12;
+        private const int QuestionCount = 50;
 
         public Game(Action<string> output)
         {
             _output = output;
-            for (var i = 0; i < 50; i++)
+            _categories= new Category[]
             {
-                
-                AddQuestion(Categories.Pop,i);
-                AddQuestion(Categories.Science,i);
-                AddQuestion(Categories.Sports,i);
-                AddQuestion(Categories.Rock,i);
-            }
-        }
-
-        private void AddQuestion(string category, int index)
-        {
-            _questions[category].Add($"{category} Question {index}");
+                new Category(Categories.Pop, QuestionCount),
+                new Category(Categories.Science, QuestionCount),
+                new Category(Categories.Sports, QuestionCount),
+                new Category(Categories.Rock,QuestionCount),
+               
+            }.ToDictionary(c=>c.Name,c=>c);
         }
 
         public bool IsPlayable()
@@ -92,14 +80,14 @@ namespace Trivia
                     + _players[_currentPlayer].Place);
             _output("The category is " + CurrentCategory());
             var cc = CurrentCategory();
-            var q = _questions[cc].First();
+            var q =  _categories[cc].Questions.First();
             _output(q);
-            _questions[cc].Remove(q);
+            _categories[cc].Questions.Remove(q);
         }
 
         private string CurrentCategory()
         {
-            var categoryIndex = _players[_currentPlayer].Place % CategoryCount;
+            var categoryIndex = _players[_currentPlayer].Place % _categories.Count;
             var categoryMap = new Dictionary<int, string>()
             {
                 {0, Categories.Pop},
