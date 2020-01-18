@@ -69,6 +69,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameRunner.cs" />
     <Compile Include="GameWrapper.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
