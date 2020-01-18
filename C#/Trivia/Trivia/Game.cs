@@ -28,6 +28,7 @@ namespace Trivia
         private int _currentPlayer;
         private bool _isGettingOutOfPenaltyBox;
         private const int CategoryCount  = 4;
+        private const int BoardSize = 12;
 
         public Game(Action<string> output)
         {
@@ -72,7 +73,7 @@ namespace Trivia
 
                     _output(_players[_currentPlayer] + " is getting out of the penalty box");
                     _places[_currentPlayer] = _places[_currentPlayer] + roll;
-                    if (_places[_currentPlayer] > 11) _places[_currentPlayer] = _places[_currentPlayer] - 12;
+                    if (_places[_currentPlayer] > BoardSize-1) _places[_currentPlayer] = _places[_currentPlayer] - BoardSize;
 
                     _output(_players[_currentPlayer]
                             + "'s new location is "
@@ -89,7 +90,7 @@ namespace Trivia
             else
             {
                 _places[_currentPlayer] = _places[_currentPlayer] + roll;
-                if (_places[_currentPlayer] > 11) _places[_currentPlayer] = _places[_currentPlayer] - 12;
+                if (_places[_currentPlayer] > BoardSize -1) _places[_currentPlayer] = _places[_currentPlayer] - BoardSize;
 
                 _output(_players[_currentPlayer]
                         + "'s new location is "
