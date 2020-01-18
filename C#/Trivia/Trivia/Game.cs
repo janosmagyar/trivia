@@ -52,10 +52,6 @@ namespace Trivia
         public void Add(string playerName)
         {
             _players.Add(playerName);
-            _places[HowManyPlayers()] = 0;
-            _purses[HowManyPlayers()] = 0;
-            _inPenaltyBox[HowManyPlayers()] = false;
-
             _output(playerName + " was added");
             _output("They are player number " + _players.Count);
         }
