@@ -19,7 +19,7 @@ namespace TriviaTest
                 Console.SetOut(output);
                 for (int seed = 0; seed < 1000; seed++)
                 {
-                    GameRunner.Main(new string[] {seed.ToString()});
+                    new GameWrapper(Console.WriteLine,seed).Run();
                 }
                 Approvals.Verify(output);
             }
